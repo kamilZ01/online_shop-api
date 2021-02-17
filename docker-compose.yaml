@@ -1,0 +1,338 @@
+online_shop_app:
+  command:
+    - 'node server.js'
+  container_name: online_shop_app
+  entrypoint:
+    - container-entrypoint
+  environment:
+    - PATH=/opt/rh/rh-nodejs12/root/usr/bin:/opt/app-root/src/node_modules/.bin/:/opt/app-root/src/.npm-global/bin/:/opt/app-root/src/bin:/opt/app-root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    - 'SUMMARY=Platform for building and running Node.js 12 applications'
+    - 'DESCRIPTION=Node.js 12 available as container is a base platform for building
+      and running various Node.js 12 applications and frameworks. Node.js is a platform
+      built on Chrome''s JavaScript runtime for easily building fast, scalable network
+      applications. Node.js uses an event-driven, non-blocking I/O model that makes
+      it lightweight and efficient, perfect for data-intensive real-time applications
+      that run across distributed devices.'
+    - STI_SCRIPTS_URL=image:///usr/libexec/s2i
+    - STI_SCRIPTS_PATH=/usr/libexec/s2i
+    - APP_ROOT=/opt/app-root
+    - HOME=/opt/app-root/src
+    - PLATFORM=el7
+    - BASH_ENV=/opt/app-root/etc/scl_enable
+    - ENV=/opt/app-root/etc/scl_enable
+    - 'PROMPT_COMMAND=. /opt/app-root/etc/scl_enable'
+    - NODEJS_SCL=rh-nodejs10
+    - NODEJS_VERSION=12
+    - NPM_RUN=start
+    - NAME=nodejs
+    - NPM_CONFIG_PREFIX=/opt/app-root/src/.npm-global
+    - LD_LIBRARY_PATH=/opt/rh/rh-nodejs12/root/usr/lib64
+    - X_SCLS=rh-nodejs12
+    - MANPATH=/opt/rh/rh-nodejs12/root/usr/share/man
+  hostname: 22a2da791c2f
+  image: centos/nodejs-12-centos7
+  ipc: private
+  labels:
+    com.redhat.component: rh-nodejs12-container
+    com.redhat.deployments-dir: /opt/app-root/src
+    com.redhat.dev-mode: DEV_MODE:false
+    com.redhat.dev-mode.port: DEBUG_PORT:5858
+    description: 'Node.js 12 available as container is a base platform for building
+      and running various Node.js 12 applications and frameworks. Node.js is a platform
+      built on Chrome''s JavaScript runtime for easily building fast, scalable network
+      applications. Node.js uses an event-driven, non-blocking I/O model that makes
+      it lightweight and efficient, perfect for data-intensive real-time applications
+      that run across distributed devices.'
+    help: 'For more information visit https://github.com/sclorg/s2i-nodejs-container'
+    io.k8s.description: 'Node.js 12 available as container is a base platform for
+      building and running various Node.js 12 applications and frameworks. Node.js
+      is a platform built on Chrome''s JavaScript runtime for easily building fast,
+      scalable network applications. Node.js uses an event-driven, non-blocking I/O
+      model that makes it lightweight and efficient, perfect for data-intensive real-time
+      applications that run across distributed devices.'
+    io.k8s.display-name: 'Node.js 12'
+    io.openshift.builder-version: 9115038
+    io.openshift.expose-services: 8080:http
+    io.openshift.s2i.scripts-url: image:///usr/libexec/s2i
+    io.openshift.tags: builder,nodejs,nodejs12
+    io.s2i.scripts-url: image:///usr/libexec/s2i
+    maintainer: 'SoftwareCollections.org <sclorg@redhat.com>'
+    name: centos7/nodejs-12-centos7
+    org.label-schema.build-date: 20200809
+    org.label-schema.license: GPLv2
+    org.label-schema.name: 'CentOS Base Image'
+    org.label-schema.schema-version: 1.0
+    org.label-schema.vendor: CentOS
+    org.opencontainers.image.created: '2020-08-09 00:00:00+01:00'
+    org.opencontainers.image.licenses: GPL-2.0-only
+    org.opencontainers.image.title: 'CentOS Base Image'
+    org.opencontainers.image.vendor: CentOS
+    summary: 'Platform for building and running Node.js 12 applications'
+    usage: 's2i build <SOURCE-REPOSITORY> quay.io/centos7/nodejs-12-centos7:latest
+      <APP-NAME>'
+    version: 12
+  logging:
+    driver: json-file
+    options: {}
+  networks:
+    online_shop_network:
+      aliases:
+        - 22a2da791c2f
+  ports:
+    - 8080:8080/tcp
+  stdin_open: true
+  tty: true
+  user: 1001
+  volumes:
+    - G:\online_shop:/opt/app-root/src:rw
+  working_dir: /opt/app-root/src
+online_shop_db:
+  command:
+    - run-mysqld
+  container_name: online_shop_db
+  domainname: c3e6af74dac2
+  entrypoint:
+    - container-entrypoint
+  environment:
+    - MYSQL_USER=admin_db
+    - MYSQL_PASSWORD=Pa$$w0rd123
+    - MYSQL_DATABASE=online_shop_db
+    - PATH=/opt/app-root/src/bin:/opt/app-root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    - 'SUMMARY=MySQL 8.0 SQL database server'
+    - 'DESCRIPTION=MySQL is a multi-user, multi-threaded SQL database server. The
+      container image provides a containerized packaging of the MySQL mysqld daemon
+      and client application. The mysqld server daemon accepts connections from clients
+      and provides access to content from MySQL databases on behalf of the clients.'
+    - STI_SCRIPTS_URL=image:///usr/libexec/s2i
+    - STI_SCRIPTS_PATH=/usr/libexec/s2i
+    - APP_ROOT=/opt/app-root
+    - HOME=/var/lib/mysql
+    - PLATFORM=el7
+    - BASH_ENV=/usr/share/container-scripts/mysql/scl_enable
+    - ENV=/usr/share/container-scripts/mysql/scl_enable
+    - 'PROMPT_COMMAND=. /usr/share/container-scripts/mysql/scl_enable'
+    - MYSQL_VERSION=8.0
+    - APP_DATA=/opt/app-root/src
+    - CONTAINER_SCRIPTS_PATH=/usr/share/container-scripts/mysql
+    - MYSQL_PREFIX=/opt/rh/rh-mysql80/root/usr
+    - ENABLED_COLLECTIONS=rh-mysql80
+    - MYSQL_DEFAULT_AUTHENTICATION_PLUGIN=mysql_native_password
+  hostname: c3e6af74dac2
+  image: centos/mysql-80-centos7
+  ipc: private
+  labels:
+    com.redhat.component: rh-mysql80-container
+    description: 'MySQL is a multi-user, multi-threaded SQL database server. The container
+      image provides a containerized packaging of the MySQL mysqld daemon and client
+      application. The mysqld server daemon accepts connections from clients and provides
+      access to content from MySQL databases on behalf of the clients.'
+    io.k8s.description: 'MySQL is a multi-user, multi-threaded SQL database server.
+      The container image provides a containerized packaging of the MySQL mysqld daemon
+      and client application. The mysqld server daemon accepts connections from clients
+      and provides access to content from MySQL databases on behalf of the clients.'
+    io.k8s.display-name: 'MySQL 8.0'
+    io.openshift.builder-version: 8d4969a
+    io.openshift.expose-services: 3306:mysql
+    io.openshift.s2i.scripts-url: image:///usr/libexec/s2i
+    io.openshift.tags: database,mysql,mysql80,rh-mysql80
+    io.s2i.scripts-url: image:///usr/libexec/s2i
+    maintainer: 'SoftwareCollections.org <sclorg@redhat.com>'
+    name: centos7/mysql-80-centos7
+    org.label-schema.build-date: 20200809
+    org.label-schema.license: GPLv2
+    org.label-schema.name: 'CentOS Base Image'
+    org.label-schema.schema-version: 1.0
+    org.label-schema.vendor: CentOS
+    org.opencontainers.image.created: '2020-08-09 00:00:00+01:00'
+    org.opencontainers.image.licenses: GPL-2.0-only
+    org.opencontainers.image.title: 'CentOS Base Image'
+    org.opencontainers.image.vendor: CentOS
+    summary: 'MySQL 8.0 SQL database server'
+    usage: 'docker run -d -e MYSQL_USER=user -e MYSQL_PASSWORD=pass -e MYSQL_DATABASE=db
+      -p 3306:3306 quay.io/centos7/mysql-80-centos7'
+    version: 8.0
+  logging:
+    driver: json-file
+    options: {}
+  networks:
+    online_shop_network:
+      aliases:
+        - 40a3280eea9b
+        - c3e6af74dac2
+  ports:
+    - 0.0.0.0:3306:3306/tcp
+  user: 27
+  working_dir: /opt/app-root/src
+version: "3"
+services:
+  online_shop_app:
+    command:
+      - 'node server.js'
+    container_name: online_shop_app
+    entrypoint:
+      - container-entrypoint
+    environment:
+      - PATH=/opt/rh/rh-nodejs12/root/usr/bin:/opt/app-root/src/node_modules/.bin/:/opt/app-root/src/.npm-global/bin/:/opt/app-root/src/bin:/opt/app-root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+      - 'SUMMARY=Platform for building and running Node.js 12 applications'
+      - 'DESCRIPTION=Node.js 12 available as container is a base platform for building
+        and running various Node.js 12 applications and frameworks. Node.js is a platform
+        built on Chrome''s JavaScript runtime for easily building fast, scalable network
+        applications. Node.js uses an event-driven, non-blocking I/O model that makes
+        it lightweight and efficient, perfect for data-intensive real-time applications
+        that run across distributed devices.'
+      - STI_SCRIPTS_URL=image:///usr/libexec/s2i
+      - STI_SCRIPTS_PATH=/usr/libexec/s2i
+      - APP_ROOT=/opt/app-root
+      - HOME=/opt/app-root/src
+      - PLATFORM=el7
+      - BASH_ENV=/opt/app-root/etc/scl_enable
+      - ENV=/opt/app-root/etc/scl_enable
+      - 'PROMPT_COMMAND=. /opt/app-root/etc/scl_enable'
+      - NODEJS_SCL=rh-nodejs10
+      - NODEJS_VERSION=12
+      - NPM_RUN=start
+      - NAME=nodejs
+      - NPM_CONFIG_PREFIX=/opt/app-root/src/.npm-global
+      - LD_LIBRARY_PATH=/opt/rh/rh-nodejs12/root/usr/lib64
+      - X_SCLS=rh-nodejs12
+      - MANPATH=/opt/rh/rh-nodejs12/root/usr/share/man
+    hostname: 22a2da791c2f
+    image: 39d4c22e4ef8
+    ipc: private
+    labels:
+      com.redhat.component: rh-nodejs12-container
+      com.redhat.deployments-dir: /opt/app-root/src
+      com.redhat.dev-mode: DEV_MODE:false
+      com.redhat.dev-mode.port: DEBUG_PORT:5858
+      description: 'Node.js 12 available as container is a base platform for building
+        and running various Node.js 12 applications and frameworks. Node.js is a platform
+        built on Chrome''s JavaScript runtime for easily building fast, scalable network
+        applications. Node.js uses an event-driven, non-blocking I/O model that makes
+        it lightweight and efficient, perfect for data-intensive real-time applications
+        that run across distributed devices.'
+      help: 'For more information visit https://github.com/sclorg/s2i-nodejs-container'
+      io.k8s.description: 'Node.js 12 available as container is a base platform for
+        building and running various Node.js 12 applications and frameworks. Node.js
+        is a platform built on Chrome''s JavaScript runtime for easily building fast,
+        scalable network applications. Node.js uses an event-driven, non-blocking
+        I/O model that makes it lightweight and efficient, perfect for data-intensive
+        real-time applications that run across distributed devices.'
+      io.k8s.display-name: 'Node.js 12'
+      io.openshift.builder-version: 9115038
+      io.openshift.expose-services: 8080:http
+      io.openshift.s2i.scripts-url: image:///usr/libexec/s2i
+      io.openshift.tags: builder,nodejs,nodejs12
+      io.s2i.scripts-url: image:///usr/libexec/s2i
+      maintainer: 'SoftwareCollections.org <sclorg@redhat.com>'
+      name: centos7/nodejs-12-centos7
+      org.label-schema.build-date: 20200809
+      org.label-schema.license: GPLv2
+      org.label-schema.name: 'CentOS Base Image'
+      org.label-schema.schema-version: 1.0
+      org.label-schema.vendor: CentOS
+      org.opencontainers.image.created: '2020-08-09 00:00:00+01:00'
+      org.opencontainers.image.licenses: GPL-2.0-only
+      org.opencontainers.image.title: 'CentOS Base Image'
+      org.opencontainers.image.vendor: CentOS
+      summary: 'Platform for building and running Node.js 12 applications'
+      usage: 's2i build <SOURCE-REPOSITORY> quay.io/centos7/nodejs-12-centos7:latest
+        <APP-NAME>'
+      version: 12
+    logging:
+      driver: json-file
+      options: {}
+    networks:
+      online_shop_network:
+        aliases:
+          - 22a2da791c2f
+    ports:
+      - 8080:8080/tcp
+    stdin_open: true
+    tty: true
+    user: 1001
+    volumes:
+      - G:\online_shop:/opt/app-root/src:rw
+    working_dir: /opt/app-root/src
+  online_shop_db:
+    command:
+      - run-mysqld
+    container_name: online_shop_db
+    domainname: c3e6af74dac2
+    entrypoint:
+      - container-entrypoint
+    environment:
+      - MYSQL_USER=admin_db
+      - MYSQL_PASSWORD=Pa$$w0rd123
+      - MYSQL_DATABASE=online_shop_db
+      - PATH=/opt/app-root/src/bin:/opt/app-root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+      - 'SUMMARY=MySQL 8.0 SQL database server'
+      - 'DESCRIPTION=MySQL is a multi-user, multi-threaded SQL database server. The
+        container image provides a containerized packaging of the MySQL mysqld daemon
+        and client application. The mysqld server daemon accepts connections from
+        clients and provides access to content from MySQL databases on behalf of the
+        clients.'
+      - STI_SCRIPTS_URL=image:///usr/libexec/s2i
+      - STI_SCRIPTS_PATH=/usr/libexec/s2i
+      - APP_ROOT=/opt/app-root
+      - HOME=/var/lib/mysql
+      - PLATFORM=el7
+      - BASH_ENV=/usr/share/container-scripts/mysql/scl_enable
+      - ENV=/usr/share/container-scripts/mysql/scl_enable
+      - 'PROMPT_COMMAND=. /usr/share/container-scripts/mysql/scl_enable'
+      - MYSQL_VERSION=8.0
+      - APP_DATA=/opt/app-root/src
+      - CONTAINER_SCRIPTS_PATH=/usr/share/container-scripts/mysql
+      - MYSQL_PREFIX=/opt/rh/rh-mysql80/root/usr
+      - ENABLED_COLLECTIONS=rh-mysql80
+      - MYSQL_DEFAULT_AUTHENTICATION_PLUGIN=mysql_native_password
+    hostname: c3e6af74dac2
+    image: centos/mysql-80-centos7
+    ipc: private
+    labels:
+      com.redhat.component: rh-mysql80-container
+      description: 'MySQL is a multi-user, multi-threaded SQL database server. The
+        container image provides a containerized packaging of the MySQL mysqld daemon
+        and client application. The mysqld server daemon accepts connections from
+        clients and provides access to content from MySQL databases on behalf of the
+        clients.'
+      io.k8s.description: 'MySQL is a multi-user, multi-threaded SQL database server.
+        The container image provides a containerized packaging of the MySQL mysqld
+        daemon and client application. The mysqld server daemon accepts connections
+        from clients and provides access to content from MySQL databases on behalf
+        of the clients.'
+      io.k8s.display-name: 'MySQL 8.0'
+      io.openshift.builder-version: 8d4969a
+      io.openshift.expose-services: 3306:mysql
+      io.openshift.s2i.scripts-url: image:///usr/libexec/s2i
+      io.openshift.tags: database,mysql,mysql80,rh-mysql80
+      io.s2i.scripts-url: image:///usr/libexec/s2i
+      maintainer: 'SoftwareCollections.org <sclorg@redhat.com>'
+      name: centos7/mysql-80-centos7
+      org.label-schema.build-date: 20200809
+      org.label-schema.license: GPLv2
+      org.label-schema.name: 'CentOS Base Image'
+      org.label-schema.schema-version: 1.0
+      org.label-schema.vendor: CentOS
+      org.opencontainers.image.created: '2020-08-09 00:00:00+01:00'
+      org.opencontainers.image.licenses: GPL-2.0-only
+      org.opencontainers.image.title: 'CentOS Base Image'
+      org.opencontainers.image.vendor: CentOS
+      summary: 'MySQL 8.0 SQL database server'
+      usage: 'docker run -d -e MYSQL_USER=user -e MYSQL_PASSWORD=pass -e MYSQL_DATABASE=db
+        -p 3306:3306 quay.io/centos7/mysql-80-centos7'
+      version: 8.0
+    logging:
+      driver: json-file
+      options: {}
+    networks:
+      online_shop_network:
+        aliases:
+          - 40a3280eea9b
+          - c3e6af74dac2
+    ports:
+      - 0.0.0.0:3306:3306/tcp
+    user: 27
+    working_dir: /opt/app-root/src
+networks:
+  online_shop_network:
+    external: true
